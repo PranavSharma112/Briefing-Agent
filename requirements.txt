@@ -1,0 +1,9 @@
+youtube-transcript-api>=1.0
+google-api-python-client
+chromadb
+google-genai
+yfinance
+feedparser
+jinja2
+python-dotenv
+requests

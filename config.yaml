@@ -1,0 +1,25 @@
+youtube_channels:
+  - name: "Chanakya Dialogues"
+    channel_id: "UC1bUswUinAEFYaRQFvAKjPA"
+  - name: "Career 247"
+    channel_id: "UCHyu2gwfAkOXWroIjvxVUCg"
+  - name: "Think School"
+    channel_id: "UCKZozRVHRYsYHGEyNKuhhdA"
+  - name: "CA Rahul Malodia"
+    channel_id: "UCPgfM-dk3XAb4T3DtT6Nwsw"
+    
+news_rss_feeds:
+  ai_news: ["https://techcrunch.com/category/artificial-intelligence/feed/"]
+  local_news: []   # I'll fill in
+
+markets:
+  tickers: ["^NSEI", "^BSESN", "^GSPC"]  # Nifty, Sensex, S&P500
+
+weather:
+  city: "New Delhi"
+  lat: 28.6139
+  lon: 77.2090
+
+email:
+  to: "pranavsharma2904@gmail.com"
+  from: "pranavsharma2904@gmail.com"
