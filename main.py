@@ -1,5 +1,7 @@
 """Orchestrates the full daily briefing pipeline, end to end."""
 import time
+from datetime import date
+from pathlib import Path
 
 import yaml
 
@@ -17,8 +19,18 @@ from mailer import render_email, send_email
 with open("config.yaml") as f:
     config = yaml.safe_load(f)
 
+LAST_RUN_FILE = Path(".last_run.txt")
+
 
 def main():
+    today = date.today().isoformat()
+
+    if LAST_RUN_FILE.exists():
+        last_run = LAST_RUN_FILE.read_text().strip()
+        if last_run == today:
+            print("Already sent today's briefing, skipping")
+            return
+
     print("Fetching weather...")
     weather = get_weather(config)
 
@@ -66,6 +78,7 @@ def main():
     sent = send_email(html, config, date=brief["date"])
 
     if sent:
+        LAST_RUN_FILE.write_text(today)
         print("Done — briefing sent successfully.")
     else:
         # WHY: email failure shouldn't hide that everything upstream worked.

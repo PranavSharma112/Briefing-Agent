@@ -13,7 +13,7 @@ load_dotenv()
 _client = None
 
 _OLLAMA_URL = "http://localhost:11434/api/generate"
-_OLLAMA_MODEL = "mistral:7b"
+_OLLAMA_MODEL = "qwen3:4b"
 
 
 def _get_client():
@@ -28,18 +28,14 @@ def _get_client():
 
 
 def _generate_with_retry(prompt: str):
-    # WHY: free-tier Gemini hits 429 (rate limit) / 503 (overloaded) under load.
-    # One retry after a 15s cooldown resolves most transient cases without
-    # adding unbounded retry complexity.
     try:
-        return _get_client().models.generate_content(model="gemini-2.0-flash", contents=prompt)
+        return _get_client().models.generate_content(model="gemini-2.5-flash", contents=prompt)
     except APIError as e:
         if e.code in (429, 503):
             print(f"[summarizer] got {e.code}, waiting 15s before retry...")
             time.sleep(15)
-            return _get_client().models.generate_content(model="gemini-2.0-flash", contents=prompt)
+            return _get_client().models.generate_content(model="gemini-2.5-flash", contents=prompt)
         raise
-
 
 def call_llm(prompt: str, system: str = "") -> str | None:
     """Tries Gemini (with retry), falls back to local Ollama, returns None if both fail."""
